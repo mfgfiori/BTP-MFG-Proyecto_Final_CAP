@@ -1,0 +1,22 @@
+
+###Get all Sales Order Header 
+GET http://localhost:4004/sales-order/SalesOrderHeader
+
+###Get a Sales Order Header by ID
+GET http://localhost:4004/sales-order/SalesOrderHeader(72AD846C-0C40-1EDD-B0B9-BD0A7D027426)
+
+###Get Sales Order Items from Header ID
+GET http://localhost:4004/sales-order/SalesOrderHeader(72AD846C-0C40-1EDD-B0B9-BD0A7D027426)/to_Items
+
+###Get Sales Order Header by Email
+GET http://localhost:4004/sales-order/SalesOrderHeader?$filter=Email eq 'n.foster@randatmail.com'
+
+### Get Sales Order items
+GET http://localhost:4004/sales-order/SalesOrderItems
+
+### Get Sales Order items
+GET http://localhost:4004/sales-order/SalesOrderItems(3677b117-a46a-4dbf-8652-3b14b4805324)
+
+
+
+
