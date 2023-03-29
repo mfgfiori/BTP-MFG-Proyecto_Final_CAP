@@ -5,21 +5,25 @@ const { SalesOrderHeader } = cds.entities("com.logali.SalesOrder");
 module.exports = (srv) => {
  //*************READ*****************//
 
-    /* srv.on("READ", "SalesOrderHeader", async (req) => {
+    srv.on("READ", "SalesOrderHeader", async (req) => {
 
-        {ClientEmail : req.data.ClientEmail}
-        return await SELECT.from(SalesOrderHeader);
-     });*/
+        if (req.data.ID !== undefined) {
+            return await SELECT.from(SalesOrderHeader).where`ID= ${req.data.ID}`;
+        }
+
+        return await cds.transaction(req).run(req.query);
+
+     });
     
-
 
     //*************CREATE*****************//
 
         //*************DELETE*****************//
-//    srv.on("DELETE", "DeleteOrder", async (req) => {
-    srv.on("DELETE", "Orders", async (req) => {
+
+    /*srv.on("DELETE", "SalesOrderHeader", async (req) => {
+        console.debug(req.data);
         let returnData = await cds.transaction(req).run(
-            DELETE.from(SalesOrderHeader).where({ClientEmail : req.data.ClientEmail})
+            DELETE.from(SalesOrderHeader).where({ID : req.data.ID})
         ).then((resolve, reject) => {
             console.log("Resolve", resolve);
             console.log("Reject", reject);
@@ -32,5 +36,5 @@ module.exports = (srv) => {
         });
         console.log("Before End ", returnData);
         return await returnData;
-    });
+    });*/
 };
