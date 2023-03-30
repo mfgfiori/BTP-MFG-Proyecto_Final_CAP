@@ -1,4 +1,4 @@
-
+//*-------------------READ-------------------*//
 ###Get all Sales Order Header 
 GET http://localhost:4004/sales-order/SalesOrderHeader
 
@@ -19,7 +19,32 @@ GET http://localhost:4004/sales-order/SalesOrderItems
 ### Get Sales Order items
 GET http://localhost:4004/sales-order/SalesOrderItems(3677b117-a46a-4dbf-8652-3b14b4805324)
 
+//*-------------------CREATE-------------------*//
+### Create Sales Order
+POST http://localhost:4004/sales-order/SalesOrderHeader HTTP/1.1
+Content-Type: application/json
 
+{      
+"Email": "g.garcia@randatmail.com",
+"FirstName": "Gloria",
+"LastName": "Garcia",
+"Country": "Mexico",
+"CreateOn": "2023-03-30",
+"DeliveryDate": "2024-03-30",
+"OrderStatus": 1,
+"ImageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/94/Kubic_logo_official.png"
+}
+
+
+//*-------------------UPDATE-------------------*//
+### Update Sales Order
+PUT http://localhost:4004/sales-order/SalesOrderHeader(72AD846C-0C40-1EDD-B0B9-BD0A7D021426) HTTP/1.1
+Content-Type: application/json
+
+{
+   "Country": "España"
+}
+//*-------------------DELETE-------------------*//
 
 ### Delete Order
 DELETE http://localhost:4004/sales-order/SalesOrderHeader(72AD846C-0C40-1EDD-B0B9-BD0A7D01D426)

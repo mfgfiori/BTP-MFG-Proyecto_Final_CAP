@@ -11,10 +11,15 @@
     "express": "^4"
   },
   "devDependencies": {
+    "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
+    "@sap/ux-specification": "^1.108.1",
+    "@sapui5/ts-types": "^1.92.2",
+    "eslint": "^7.32.0",
     "sqlite3": "^5.0.4"
   },
   "scripts": {
-    "start": "cds watch"
+    "start": "cds watch",
+    "watch-salesorder": "cds watch --open salesorder/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
     "node": "^16.15"
@@ -43,5 +48,8 @@
       "no-console": "off",
       "require-atomic-updates": "off"
     }
-  }
+  },
+  "sapux": [
+    "app/salesorder"
+  ]
 }
