@@ -1,22 +1,43 @@
 using {com.logali.SalesOrder as logali} from '../db/schema';
 
 define service CatalogService {
+    type cancelOrderReturn {
+        status  : String enum {
+            Succeeded;
+            Failed
+        };
+        message : String
+    };
 
-    entity SalesOrderHeader as
+    entity SalesOrderHeader  as
         select from logali.SalesOrderHeader {
             ID,
-            Email       @mandatory,
+            Email                   @mandatory,
             FirstName,
             LastName,
             Country,
-            CreateOn    @readonly,
+            CreateOn                @readonly,
             DeliveryDate,
-            OrderStatus @readonly,
+            OrderStatus             @(
+                readonly,
+                assert.range : [
+                    0,
+                    3,
+                    00
+                ]
+            ),
             ImageUrl,
-            to_Items
+            to_Items,
+            StatusText              @readOnly,            
+        } actions {            
+            action cancelSalesOrder @(
+                Core.OperationAvailable : { $edmJson: { $Eq: [{ $Path: 'in/StatusText'}, 'New']}},    
+                Common.SideEffects : {TargetProperties : ['in/OrderStatus','in/StatusText']} 
+            ) () returns SalesOrderHeader;          
         };
+       
 
-    entity SalesOrderItem   as
+    entity SalesOrderItem    as
         select from logali.SalesOrderItems {
             ID,
             Name,
@@ -24,15 +45,15 @@ define service CatalogService {
             ReleaseDate,
             DiscontinuedDate,
             Price,
-            CurrencyCode.ID               as Currency,
-            CurrencyCode.Description   as Desc_Currency @readonly,
+            CurrencyCode.ID            as Currency,
+            CurrencyCode.Description   as Desc_Currency       @readonly,
             Height,
             Width,
             Depth,
-            DimensionUnits.ID as DimensionUnits,
+            DimensionUnits.ID          as DimensionUnits,
             DimensionUnits.Description as Desc_DimensionUnits @readonly,
             Quantity,
-            UnitOfMeasures.ID as UnitOfMeasures,
+            UnitOfMeasures.ID          as UnitOfMeasures,
             UnitOfMeasures.Description as Desc_UnitOfMeasures @readonly,
             to_Header
         };

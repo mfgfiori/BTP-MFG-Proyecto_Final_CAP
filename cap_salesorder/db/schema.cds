@@ -7,6 +7,13 @@ namespace com.logali;
 
 type Dec : Decimal(16, 2);
 
+/* type Status: Integer @asser.range enum {
+    0; // Neutral         - New
+    1;  // Negative (red)  - Cancel
+    2;  // Critical (orange) - Processing
+    3;  // Positive (green)  - Complete 
+}  */
+
 context SalesOrder {
     entity SalesOrderHeader : cuid, managed {
             Email        : String(30) not null;
@@ -15,10 +22,14 @@ context SalesOrder {
             Country      : String(30);
             CreateOn     : Date;
             DeliveryDate : Date;
-            OrderStatus  : Integer;
+            OrderStatus  : Integer;  /* 0 - Neutral         - New
+                                        1 - Negative (red)  - Cancel
+                                        2 - Critical (orange) - Processing
+                                        3 - Positive (green)  - Complete */         
             ImageUrl     : String;
             to_Items     : Composition of many SalesOrderItems
                                on to_Items.to_Header = $self;
+            virtual  StatusText : String(20);            
     };
 
     entity SalesOrderItems : cuid, managed {        
